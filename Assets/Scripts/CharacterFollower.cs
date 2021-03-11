@@ -5,7 +5,7 @@ using UnityEngine;
 public class CharacterFollower : MonoBehaviour
 {
     public Transform charPosition;
-    private Vector3 camOffset = new Vector3(0, 0, -9);
+    private Vector3 camOffset = new Vector3(0, 4, -9);
     public Transform camPosition;
     public float followRate;
   
