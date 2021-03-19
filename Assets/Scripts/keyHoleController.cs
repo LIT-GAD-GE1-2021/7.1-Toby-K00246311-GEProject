@@ -4,11 +4,19 @@ using UnityEngine;
 
 public class keyHoleController : MonoBehaviour
 {
+    private bool keyIn;
+    public Animator theAnimator;
+
+    void Update()
+    {
+        theAnimator.SetBool("keyIn", keyIn);
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player" && LevelManager.instance.hasKey == true)
+        if (keyIn == false && collision.gameObject.tag == "Player" && LevelManager.instance.hasKey == true)
         {
+            keyIn = true;
             LevelManager.instance.UsedKey();
         }
     }

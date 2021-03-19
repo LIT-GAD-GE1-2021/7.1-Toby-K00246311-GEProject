@@ -19,6 +19,12 @@ public class LevelManager : MonoBehaviour
         instance = this;
     }
 
+    void Update()
+    {
+        doorAnimator.SetBool("doorOpened", doorOpened);
+        doorAnimator.SetBool("doorClosed", doorClosed);
+    }
+
     public void KeyCollected()
     {
         hasKey = true;
@@ -28,6 +34,8 @@ public class LevelManager : MonoBehaviour
 
     public void UsedKey()
     {
+        doorClosed = false;
+        doorOpened = true;
         hasKey = false;
         Debug.Log("Key Used");
     }
