@@ -15,7 +15,7 @@ public class GolemController : MonoBehaviour
     private bool jump;
     private bool isRunning;
 
-    bool facingRight = true;
+    public bool facingRight = true;
 
     private float hAxis;
 
