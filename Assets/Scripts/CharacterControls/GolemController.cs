@@ -3,7 +3,10 @@ using System.Collections;
 
 public class GolemController : MonoBehaviour
 {
-  
+    public int charHealth = 5;
+    private bool isDead;
+    private bool hasDied;
+
     public float jumpSpeed;
     public float horizontalSpeed = 10;
     public LayerMask whatIsGround;
@@ -39,6 +42,12 @@ public class GolemController : MonoBehaviour
 
     void Update()
     {
+        DeathDetection();
+
+        theAnimator.SetBool("isDead", isDead);
+
+        theAnimator.SetBool("hasDied", hasDied);
+
         jump = Input.GetKeyDown(KeyCode.Space);
 
         hAxis = Input.GetAxis("Horizontal");
@@ -61,13 +70,13 @@ public class GolemController : MonoBehaviour
         theAnimator.SetBool("running", isRunning);
 
 
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKeyDown(KeyCode.LeftShift) && isDead == false)
         {
             horizontalSpeed = 25;
             isRunning = true;
         }
 
-        if (Input.GetKeyUp(KeyCode.LeftShift))
+        if (Input.GetKeyUp(KeyCode.LeftShift) && isDead == false)
         {
             horizontalSpeed = 10;
             isRunning = false;
@@ -77,21 +86,21 @@ public class GolemController : MonoBehaviour
 
         if (grounded)
         {
-            if ((hAxis > 0) && (facingRight == false))
+            if ((hAxis > 0) && (facingRight == false) && isDead == false)
             {
                 Flip();
             }
-            else if ((hAxis < 0) && (facingRight == true))
+            else if ((hAxis < 0) && (facingRight == true) && isDead == false)
             {
                 Flip();
             }
         }
 
-        if (grounded && !jump)
+        if (grounded && !jump && isDead == false)
         {
             theRigidBody.velocity = new Vector2(horizontalSpeed * hAxis, theRigidBody.velocity.y);
         }
-        else if (grounded && jump)
+        else if (grounded && jump && isDead == false)
         {
 
             theRigidBody.velocity = new Vector2(theRigidBody.velocity.x, jumpSpeed);
@@ -107,14 +116,31 @@ public class GolemController : MonoBehaviour
 
     }
 
-   
-    void FixedUpdate()
+
+    void OnCollisionEnter2D(Collision2D collision)
     {
+        if (collision.gameObject.tag == "Enemy")
+        {
+            charHealth -= 1;
+            Debug.Log("Damage Taken");
+        }
 
-        
-   
-  
+    }
 
+    public void DeathDetection()
+    {
+        if (charHealth <= 1 && isDead == false)
+        {
+            hasDied = true;
+            isDead = true;
+            Invoke("FalsifyBool", 0.2f);
+            Debug.Log("Golem is Dead");
+        }
+    }
+
+    private void FalsifyBool()
+    {
+        hasDied = false;
     }
 
 
