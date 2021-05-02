@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
@@ -23,6 +24,11 @@ public class LevelManager : MonoBehaviour
     {
         doorAnimator.SetBool("doorOpened", doorOpened);
         doorAnimator.SetBool("doorClosed", doorClosed);
+        
+        if(Input.GetKeyDown("r"))
+        {
+            SceneManager.LoadScene("GameEnginesProject");
+        }
     }
 
     public void KeyCollected()

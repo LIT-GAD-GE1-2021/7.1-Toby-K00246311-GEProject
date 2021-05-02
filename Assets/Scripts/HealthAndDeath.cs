@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class HealthAndDeath : MonoBehaviour
 {
-    public int charHealth = 5;
+    public float charHealth = 5.0f;
+    public float charMaxHealth = 5.0f;
 
     private Animator theAnimator;
 
     private bool isDead;
+
+    public AudioSource damageSound;
 
 
     void Update()
@@ -23,14 +26,15 @@ public class HealthAndDeath : MonoBehaviour
         if (collision.gameObject.tag == "Enemy")
         {
             charHealth -= 1;
-            Debug.Log("Damage Taken");
+            damageSound.Play();
+            Debug.Log("Health is at " + charHealth.ToString());
         }
 
     }
 
     public void DeathDetection()
     {
-        if (charHealth <= 1)
+        if (charHealth <= 0)
         {
             isDead = true;
             Debug.Log("Golem is Dead");

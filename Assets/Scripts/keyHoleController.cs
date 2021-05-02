@@ -6,6 +6,7 @@ public class keyHoleController : MonoBehaviour
 {
     private bool keyIn;
     public Animator theAnimator;
+    public AudioSource keyHoleSound;
 
     void Update()
     {
@@ -17,6 +18,7 @@ public class keyHoleController : MonoBehaviour
         if (keyIn == false && collision.gameObject.tag == "Player" && LevelManager.instance.hasKey == true)
         {
             keyIn = true;
+            keyHoleSound.Play();
             LevelManager.instance.UsedKey();
         }
     }

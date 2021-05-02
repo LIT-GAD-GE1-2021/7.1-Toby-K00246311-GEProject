@@ -4,23 +4,15 @@ using UnityEngine;
 
 public class keyController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
+    public AudioSource collectionSound;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")
         {
             LevelManager.instance.KeyCollected();
+
+            collectionSound.Play();
 
             Destroy(gameObject, 0.2f);
         }
